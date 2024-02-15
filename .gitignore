@@ -11,6 +11,10 @@
 # production
 /build
 
+# server
+/server/*
+!/server/.gitkeep
+
 # misc
 .DS_Store
 .env.local
