@@ -1,7 +1,14 @@
-import "./App.css";
+import "./index.css";
+import NavBar from "./components/NavBar/NavBar";
+import Overview from "./components/Overview/Overview";
 
 function App() {
-  return <h1>Oh hey there.</h1>;
+  return (
+    <div>
+      <NavBar />
+      <Overview />
+    </div>
+  );
 }
 
 export default App;
