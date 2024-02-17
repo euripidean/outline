@@ -1,5 +1,5 @@
 import CardsMenu from "../CardsMenu/CardsMenu";
-import Display from "../Display/Display";
+import DisplayGrid from "../DisplayGrid/DisplayGrid";
 import {
   DndContext,
   closestCenter,
@@ -22,7 +22,7 @@ function Overview() {
       <DndContext>
         <SortableContext items={cards} strategy={closestCenter}>
           <CardsMenu setCards={setCards} />
-          <Display />
+          <DisplayGrid />
         </SortableContext>
       </DndContext>
     </div>

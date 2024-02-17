@@ -1,4 +1,4 @@
-function Display() {
+function DisplayGrid() {
   return (
     <div className="display grid grid-gap-4">
       <h2>Display Title</h2>
@@ -7,4 +7,4 @@ function Display() {
   );
 }
 
-export default Display;
+export default DisplayGrid;
