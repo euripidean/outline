@@ -12,21 +12,13 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useState } from "react";
 
 // This is where the cards are rendered, we map through the array of cards and render a SortableCard for each one.
 // Later, we will add the ability to drag and drop the cards into the display grid.
 // The card array will ultimately come from a query call to the database to get all cards associated with the project that are NOT currently in the display grid
 
-function CardsMenu() {
-  const [cards, setCards] = useState([
-    "Card 1",
-    "Card 2",
-    "Card 3",
-    "Card 4",
-    "Card 5",
-  ]);
-
+function CardsMenu(props) {
+  const { cards, setCards } = props;
   const handleSortEnd = (event) => {
     const { active, over } = event;
     if (active.id !== over.id) {
