@@ -18,7 +18,7 @@ function CardsMenu(props) {
 
   return (
     <div
-      className="cards-menu flex flex-col w-full h-full overflow-y-auto p-4"
+      className="cards-menu flex flex-col w-full h-screen overflow-y-auto p-4"
       style={{ backgroundColor: "#f5f5f5" }}
     >
       <SortableContext

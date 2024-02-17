@@ -70,7 +70,7 @@ function Overview() {
   );
 
   return (
-    <div className="grid grid-cols-[auto_1fr]">
+    <div className="grid gap-4 grid-cols-[20%_auto]">
       <DndContext
         announcements={defaultAnnouncements}
         sensors={sensors}
