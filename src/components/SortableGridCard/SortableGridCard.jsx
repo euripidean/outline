@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-export function SortableCard(props) {
+export function SortableGridCard(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
       id: props.id,

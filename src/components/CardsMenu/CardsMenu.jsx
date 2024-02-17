@@ -1,4 +1,4 @@
-import { SortableCard } from "../SortableCard/SortableCard";
+import { SortableMenuCard } from "../SortableMenuCard/SortableMenuCard";
 import {
   DndContext,
   closestCenter,
@@ -36,7 +36,7 @@ function CardsMenu(props) {
       <DndContext collisionDetector={closestCenter} onDragEnd={handleSortEnd}>
         <SortableContext items={cards} strategy={verticalListSortingStrategy}>
           {cards.map((card, index) => (
-            <SortableCard key={index} id={card} />
+            <SortableMenuCard key={index} id={card} />
           ))}
         </SortableContext>
       </DndContext>

@@ -4,8 +4,7 @@ import {
   SortableContext,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useState } from "react";
-import { SortableCard } from "../SortableCard/SortableCard";
+import { SortableGridCard } from "../SortableGridCard/SortableGridCard";
 
 function DisplayGrid(props) {
   const { cards, setCards } = props;
@@ -24,7 +23,7 @@ function DisplayGrid(props) {
       <DndContext collisionDetection={closestCenter} onDragEnd={handleGridSort}>
         <SortableContext items={cards} strategy={horizontalListSortingStrategy}>
           {cards.map((card, index) => (
-            <SortableCard key={index} id={card} />
+            <SortableGridCard key={index} id={card} />
           ))}
         </SortableContext>
       </DndContext>
