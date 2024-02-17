@@ -1,14 +1,6 @@
 import { SortableMenuCard } from "../SortableMenuCard/SortableMenuCard";
+import { useDroppable } from "@dnd-kit/core";
 import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -18,28 +10,28 @@ import {
 // The card array will ultimately come from a query call to the database to get all cards associated with the project that are NOT currently in the display grid
 
 function CardsMenu(props) {
-  const { cards, setCards } = props;
-  const handleSortEnd = (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      setCards((cards) =>
-        arrayMove(cards, cards.indexOf(active.id), cards.indexOf(over.id))
-      );
-    }
-  };
+  const { id, cards } = props;
+
+  const { setNodeRef } = useDroppable({
+    id,
+  });
 
   return (
     <div
       className="cards-menu flex flex-col"
       style={{ backgroundColor: "#f5f5f5" }}
     >
-      <DndContext collisionDetector={closestCenter} onDragEnd={handleSortEnd}>
-        <SortableContext items={cards} strategy={verticalListSortingStrategy}>
+      <SortableContext
+        id={id}
+        items={cards}
+        strategy={verticalListSortingStrategy}
+      >
+        <div ref={setNodeRef} className="flex flex-col">
           {cards.map((card, index) => (
             <SortableMenuCard key={index} id={card} />
           ))}
-        </SortableContext>
-      </DndContext>
+        </div>
+      </SortableContext>
     </div>
   );
 }

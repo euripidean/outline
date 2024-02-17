@@ -1,6 +1,10 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
+export function MenuCard(props) {
+  return <div>{props.id}</div>;
+}
+
 export function SortableMenuCard(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
@@ -14,7 +18,7 @@ export function SortableMenuCard(props) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {props.id}
+      <MenuCard id={props.id} />
     </div>
   );
 }

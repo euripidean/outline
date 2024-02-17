@@ -1,33 +1,29 @@
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { useDroppable } from "@dnd-kit/core";
 import {
-  arrayMove,
   SortableContext,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableGridCard } from "../SortableGridCard/SortableGridCard";
 
 function DisplayGrid(props) {
-  const { cards, setCards } = props;
+  const { id, cards } = props;
 
-  const handleGridSort = (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      setCards((cards) =>
-        arrayMove(cards, cards.indexOf(active.id), cards.indexOf(over.id))
-      );
-    }
-  };
+  const { setNodeRef } = useDroppable({
+    id,
+  });
 
   return (
-    <div className="display grid grid-gap-4 grid-cols-3">
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleGridSort}>
-        <SortableContext items={cards} strategy={horizontalListSortingStrategy}>
-          {cards.map((card, index) => (
-            <SortableGridCard key={index} id={card} />
-          ))}
-        </SortableContext>
-      </DndContext>
-    </div>
+    <SortableContext
+      id={id}
+      items={cards}
+      strategy={horizontalListSortingStrategy}
+    >
+      <div ref={setNodeRef} className="display grid grid-gap-4 grid-cols-3">
+        {cards.map((card, index) => (
+          <SortableGridCard key={index} id={card} />
+        ))}
+      </div>
+    </SortableContext>
   );
 }
 

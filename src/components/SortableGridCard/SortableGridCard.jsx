@@ -1,5 +1,10 @@
+import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+
+export function GridCard(props) {
+  return <div>{props.id}</div>;
+}
 
 export function SortableGridCard(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -14,7 +19,7 @@ export function SortableGridCard(props) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {props.id}
+      <GridCard id={props.id} />
     </div>
   );
 }
