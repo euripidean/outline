@@ -13,7 +13,6 @@ import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import CardsMenu from "../CardsMenu/CardsMenu";
 import DisplayGrid from "../DisplayGrid/DisplayGrid";
 import { MenuCard } from "../SortableMenuCard/SortableMenuCard";
-import { GridCard } from "../SortableGridCard/SortableGridCard";
 
 const defaultAnnouncements = {
   onDragStart(id) {
@@ -80,8 +79,8 @@ function Overview() {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <CardsMenu id="menu" cards={cards.menuCards} />
-        <DisplayGrid id="display" cards={cards.gridCards} />
+        <CardsMenu id="menuCards" cards={cards.menuCards} />
+        <DisplayGrid id="gridCards" cards={cards.gridCards} />
         <DragOverlay>
           {activeId ? <MenuCard id={activeId} /> : null}
         </DragOverlay>
@@ -105,13 +104,17 @@ function Overview() {
   }
 
   function handleDragOver(event) {
-    const { active, over, draggingRect } = event;
+    const { active, over } = event;
     const { id } = active;
     const { id: overId } = over;
 
     // Find the appropriate sections for the active and over cards
     const activeSection = findSection(id);
     const overSection = findSection(overId);
+
+    console.log("In handleDragOver");
+    console.log("activeSection: ", activeSection);
+    console.log("overSection: ", overSection);
 
     if (!activeSection || !overSection || activeSection === overSection) {
       return;
@@ -127,16 +130,9 @@ function Overview() {
 
       let newIndex;
       if (overId in prev) {
-        newIndex = overCards.length + 1;
+        newIndex = overCards.length;
       } else {
-        const isBelowLastCard =
-          over &&
-          overIndex === overCards.length - 1 &&
-          draggingRect.offsetTop > over.rect.offsetTop + over.rect.height;
-
-        const modifier = isBelowLastCard ? 1 : 0;
-
-        newIndex = overIndex >= 0 ? overIndex + modifier : overCards.length + 1;
+        newIndex = overIndex;
       }
 
       return {
@@ -158,6 +154,9 @@ function Overview() {
 
     const activeSection = findSection(id);
     const overSection = findSection(overId);
+
+    console.log("In handleDragEnd");
+    console.log("activeSection: ", activeSection);
 
     if (!activeSection || !overSection || activeSection !== overSection) {
       return;
