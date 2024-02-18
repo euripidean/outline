@@ -18,7 +18,10 @@ function DisplayGrid(props) {
       items={cards}
       strategy={horizontalListSortingStrategy}
     >
-      <div ref={setNodeRef} className="display grid grid-gap-4 grid-cols-3">
+      <div
+        ref={setNodeRef}
+        className="display grid grid-gap-4 grid-cols-3 min-h-90% p-4"
+      >
         {cards.map((card, index) => (
           <SortableGridCard key={index} id={card} />
         ))}
