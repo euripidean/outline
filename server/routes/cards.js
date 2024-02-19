@@ -1,7 +1,6 @@
-import express from "express";
-import Card from "../models/Card.js";
-
+const express = require("express");
 const router = express.Router();
+const Card = require("../models/Card");
 
 //Get all cards
 router.get("/cards", async (req, res) => {
@@ -64,3 +63,5 @@ router.delete("/cards/:id", async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+
+module.exports = router;

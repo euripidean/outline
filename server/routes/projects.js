@@ -1,7 +1,6 @@
-import express from "express";
-import Project from "../models/Project.js";
-
+const express = require("express");
 const router = express.Router();
+const Project = require("../models/Project");
 
 //Get all projects
 router.get("/projects", async (req, res) => {
@@ -70,3 +69,5 @@ router.delete("/projects/:id", async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+
+module.exports = router;

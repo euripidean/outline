@@ -1,7 +1,6 @@
-import express from "express";
-import Tag from "../models/Tag.js";
-
+const express = require("express");
 const router = express.Router();
+const Tag = require("../models/Tag");
 
 //Get all tags
 router.get("/tags", async (req, res) => {
@@ -64,3 +63,5 @@ router.delete("/tags/:id", async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+
+module.exports = router;
