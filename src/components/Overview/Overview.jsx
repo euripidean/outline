@@ -14,35 +14,6 @@ import CardsMenu from "../CardsMenu/CardsMenu";
 import DisplayGrid from "../DisplayGrid/DisplayGrid";
 import { MenuCard } from "../SortableMenuCard/SortableMenuCard";
 
-const defaultAnnouncements = {
-  onDragStart(id) {
-    console.log(`Picked up draggable item ${id}.`);
-  },
-  onDragOver(id, overId) {
-    if (overId) {
-      console.log(
-        `Draggable item ${id} was moved over droppable area ${overId}.`
-      );
-      return;
-    }
-
-    console.log(`Draggable item ${id} is no longer over a droppable area.`);
-  },
-  onDragEnd(id, overId) {
-    if (overId) {
-      console.log(
-        `Draggable item ${id} was dropped over droppable area ${overId}`
-      );
-      return;
-    }
-
-    console.log(`Draggable item ${id} was dropped.`);
-  },
-  onDragCancel(id) {
-    console.log(`Dragging was cancelled. Draggable item ${id} was dropped.`);
-  },
-};
-
 function Overview() {
   const [cards, setCards] = useState({
     menuCards: [
@@ -72,7 +43,6 @@ function Overview() {
   return (
     <div className="grid gap-4 grid-cols-[20%_auto]">
       <DndContext
-        announcements={defaultAnnouncements}
         sensors={sensors}
         collisionDetection={closestCorners}
         onDragStart={handleDragStart}
