@@ -3,7 +3,12 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 export function GridCard(props) {
-  return <div>{props.id}</div>;
+  return (
+    <div>
+      {props.title}
+      {props.text}
+    </div>
+  );
 }
 
 export function SortableGridCard(props) {
@@ -19,7 +24,7 @@ export function SortableGridCard(props) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <GridCard id={props.id} />
+      <GridCard id={props.id} title={props.title} text={props.text} />
     </div>
   );
 }

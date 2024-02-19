@@ -15,20 +15,22 @@ import DisplayGrid from "../DisplayGrid/DisplayGrid";
 import { MenuCard } from "../SortableMenuCard/SortableMenuCard";
 
 function Overview() {
+  // Will need to replace the useState with the api call for the cards by project ID and the setCards with the api call to update the cards
+  // State managed through Redux.
   const [cards, setCards] = useState({
     menuCards: [
-      "Plot Card 1",
-      "Plot Card 2",
-      "Plot Card 3",
-      "Plot Card 4",
-      "Plot Card 5",
+      { id: "1", title: "Plot Card 1", text: "Plot Card 1 text" },
+      { id: "2", title: "Plot Card 2", text: "Plot Card 2 text" },
+      { id: "3", title: "Plot Card 3", text: "Plot Card 3 text" },
+      { id: "4", title: "Plot Card 4", text: "Plot Card 4 text" },
+      { id: "5", title: "Plot Card 5", text: "Plot Card 5 text" },
     ],
     gridCards: [
-      "Plot Card 6",
-      "Plot Card 7",
-      "Plot Card 8",
-      "Plot Card 9",
-      "Plot Card 10",
+      { id: "6", title: "Plot Card 6", text: "Plot Card 6 text" },
+      { id: "7", title: "Plot Card 7", text: "Plot Card 7 text" },
+      { id: "8", title: "Plot Card 8", text: "Plot Card 8 text" },
+      { id: "9", title: "Plot Card 9", text: "Plot Card 9 text" },
+      { id: "10", title: "Plot Card 10", text: "Plot Card 10 text" },
     ],
   });
 
@@ -41,7 +43,7 @@ function Overview() {
   );
 
   return (
-    <div className="grid gap-4 grid-cols-[20%_auto]">
+    <div className="grid gap-4 grid-cols-[25%_auto]">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}
@@ -59,11 +61,9 @@ function Overview() {
   );
 
   function findSection(id) {
-    if (id in cards) {
-      return id;
-    }
-
-    return Object.keys(cards).find((key) => cards[key].includes(id));
+    return Object.keys(cards).find((key) =>
+      cards[key].some((card) => card.id === id)
+    );
   }
 
   function handleDragStart(event) {
@@ -95,8 +95,8 @@ function Overview() {
       const overCards = prev[overSection];
 
       // Find the indexes of the active and over cards
-      const activeIndex = activeCards.indexOf(id);
-      const overIndex = overCards.indexOf(overId);
+      const activeIndex = activeCards.findIndex((card) => card.id === id);
+      const overIndex = overCards.findIndex((card) => card.id === overId);
 
       let newIndex;
       if (overId in prev) {
@@ -107,7 +107,9 @@ function Overview() {
 
       return {
         ...prev,
-        [activeSection]: [...prev[activeSection].filter((card) => card !== id)],
+        [activeSection]: [
+          ...prev[activeSection].filter((card) => card.id !== id),
+        ],
         [overSection]: [
           ...prev[overSection].slice(0, newIndex),
           cards[activeSection][activeIndex],
@@ -125,15 +127,16 @@ function Overview() {
     const activeSection = findSection(id);
     const overSection = findSection(overId);
 
-    console.log("In handleDragEnd");
-    console.log("activeSection: ", activeSection);
-
     if (!activeSection || !overSection || activeSection !== overSection) {
       return;
     }
 
-    const activeIndex = cards[activeSection].indexOf(active.id);
-    const overIndex = cards[overSection].indexOf(overId);
+    const activeIndex = cards[activeSection].findIndex(
+      (card) => card.id === active.id
+    );
+    const overIndex = cards[overSection].findIndex(
+      (card) => card.id === overId
+    );
 
     if (activeIndex !== overIndex) {
       setCards((cards) => ({

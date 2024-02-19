@@ -2,7 +2,12 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 export function MenuCard(props) {
-  return <div>{props.id}</div>;
+  const { id, title, text } = props;
+  return (
+    <div className="menuCard flex-row py-4 border border-slate-200 m-1" id={id}>
+      {title}
+    </div>
+  );
 }
 
 export function SortableMenuCard(props) {
@@ -18,7 +23,7 @@ export function SortableMenuCard(props) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <MenuCard id={props.id} />
+      <MenuCard id={props.id} title={props.title} />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Overview from "./components/Overview/Overview";
 function App() {
   return (
     <div>
-      <NavBar />
+      <NavBar userSignedIn={false} />
       <Overview />
     </div>
   );

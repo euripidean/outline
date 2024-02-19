@@ -20,10 +20,15 @@ function DisplayGrid(props) {
     >
       <div
         ref={setNodeRef}
-        className="display grid grid-gap-4 grid-cols-3 min-h-90% p-4"
+        className="display grid grid-gap-4 grid-cols-3 min-h-[calc(100vh-80px)]"
       >
         {cards.map((card, index) => (
-          <SortableGridCard key={index} id={card} />
+          <SortableGridCard
+            key={index}
+            id={card.id}
+            title={card.title}
+            text={card.text}
+          />
         ))}
       </div>
     </SortableContext>

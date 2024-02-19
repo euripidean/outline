@@ -37,9 +37,10 @@ const CardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location: {
+  cardType: {
     type: String,
-    required: false,
+    enum: ["menu", "grid"],
+    required: true,
   },
 });
 
