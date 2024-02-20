@@ -35,6 +35,7 @@ function Overview() {
   });
 
   const [activeId, setActiveId] = useState();
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -54,7 +55,16 @@ function Overview() {
         <CardsMenu id="menuCards" cards={cards.menuCards} />
         <DisplayGrid id="gridCards" cards={cards.gridCards} />
         <DragOverlay>
-          {activeId ? <MenuCard id={activeId} /> : null}
+          {activeId ? (
+            <MenuCard
+              id={activeId}
+              title={
+                cards[findSection(activeId)].find(
+                  (card) => card.id === activeId
+                ).title
+              }
+            />
+          ) : null}
         </DragOverlay>
       </DndContext>
     </div>
@@ -80,7 +90,11 @@ function Overview() {
 
     // Find the appropriate sections for the active and over cards
     const activeSection = findSection(id);
-    const overSection = findSection(overId);
+    let overSection = findSection(overId);
+
+    if (overSection === undefined) {
+      overSection = activeSection === "menuCards" ? "gridCards" : "menuCards";
+    }
 
     console.log("In handleDragOver");
     console.log("activeSection: ", activeSection);
@@ -97,6 +111,9 @@ function Overview() {
       // Find the indexes of the active and over cards
       const activeIndex = activeCards.findIndex((card) => card.id === id);
       const overIndex = overCards.findIndex((card) => card.id === overId);
+
+      console.log("activeIndex: ", activeIndex);
+      console.log("overIndex: ", overIndex);
 
       let newIndex;
       if (overId in prev) {
@@ -125,7 +142,11 @@ function Overview() {
     const { id: overId } = over;
 
     const activeSection = findSection(id);
-    const overSection = findSection(overId);
+    let overSection = findSection(overId);
+
+    if (overSection === undefined) {
+      overSection = activeSection === "menuCards" ? "gridCards" : "menuCards";
+    }
 
     if (!activeSection || !overSection || activeSection !== overSection) {
       return;
@@ -137,6 +158,10 @@ function Overview() {
     const overIndex = cards[overSection].findIndex(
       (card) => card.id === overId
     );
+
+    console.log("In handleDragEnd");
+    console.log("activeIndex: ", activeIndex);
+    console.log("overIndex: ", overIndex);
 
     if (activeIndex !== overIndex) {
       setCards((cards) => ({

@@ -13,14 +13,16 @@ function DisplayGrid(props) {
   });
 
   return (
-    <SortableContext
-      id={id}
-      items={cards}
-      strategy={horizontalListSortingStrategy}
+    <div
+      ref={setNodeRef}
+      className={`display grid min-w-full grid-gap-4 grid-cols-3 p-4 ${
+        cards.length > 0 ? "min-h-[50vh]" : "h-auto"
+      }`}
     >
-      <div
-        ref={setNodeRef}
-        className="display grid grid-gap-4 grid-cols-3 min-h-[calc(100vh-80px)]"
+      <SortableContext
+        id={id}
+        items={cards}
+        strategy={horizontalListSortingStrategy}
       >
         {cards.map((card, index) => (
           <SortableGridCard
@@ -30,8 +32,8 @@ function DisplayGrid(props) {
             text={card.text}
           />
         ))}
-      </div>
-    </SortableContext>
+      </SortableContext>
+    </div>
   );
 }
 
