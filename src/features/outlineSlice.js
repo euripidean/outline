@@ -1,36 +1,29 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { defaultState } from "../utils/index";
 
 export const outlineSlice = createSlice({
   name: "outline",
   initialState: defaultState(),
   reducers: {
-    addProject: () => {
-      return;
+    setOutline: (state, action) => {
+      state.outline = action.payload;
     },
-    removeProject: (state, action) => {
-      return;
+    setProjects: (state, action) => {
+      state.projects = action.payload;
     },
-    updateProject: (state, action) => {
-      return;
+    setCards: (state, action) => {
+      state.cards = action.payload;
     },
-    addCard: (state, action) => {
-      return;
+    setUsers: (state, action) => {
+      state.users = action.payload;
     },
-    removeCard: (state, action) => {
-      return;
-    },
-    updateCard: (state, action) => {
-      return;
-    },
-    addTag: (state, action) => {
-      return;
-    },
-    removeTag: (state, action) => {
-      return;
-    },
-    updateTag: (state, action) => {
-      return;
+    setLoggedInUser: (state, action) => {
+      state.loggedInUser = action.payload;
     },
   },
 });
+
+export const { setOutline, setProjects, setCards, setUsers, setLoggedInUser } =
+  outlineSlice.actions;
+
+export default outlineSlice.reducer;
