@@ -5,5 +5,6 @@ export const defaultState = () => {
     cards: [],
     tags: [],
     userLoggedIn: false,
+    showModal: false,
   };
 };

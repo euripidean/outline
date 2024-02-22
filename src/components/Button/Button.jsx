@@ -1,7 +1,22 @@
+import { useDispatch } from "react-redux";
+import { openModal } from "../../features/outlineSlice";
+
 function Button(props) {
-  const { onClick, text } = props;
+  const { text, id } = props;
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(openModal(id));
+  };
+
   return (
-    <button className="border p-2" onClick={onClick}>
+    <button
+      id={id}
+      data-modal-toggle={id}
+      type="button"
+      className="border p-2"
+      onClick={handleClick}
+    >
       {text} <i className="fa-solid fa-circle-plus p-1"></i>
     </button>
   );

@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const userApi = createApi({
-  reducerPath: "userApi",
+export const api = createApi({
+  reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_BASE_URL }),
-  tagTypes: ["User"],
+  tagTypes: ["User", "Project", "Card"],
   endpoints: (builder) => ({
+    // User endpoints
     getUser: builder.query({
       query: (id) => `user/${id}`,
       providesTags: ["User"],
@@ -32,14 +33,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-  }),
-});
-
-export const projectApi = createApi({
-  reducerPath: "projectApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_BASE_URL }),
-  tagTypes: ["Project"],
-  endpoints: (builder) => ({
+    // Project endpoints
     getProjects: builder.query({
       query: (userId) => `projects/user/${userId}`,
       providesTags: ["Project"],
@@ -71,14 +65,7 @@ export const projectApi = createApi({
       }),
       invalidatesTags: ["Project"],
     }),
-  }),
-});
-
-export const cardApi = createApi({
-  reducerPath: "cardApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_BASE_URL }),
-  tagTypes: ["Card"],
-  endpoints: (builder) => ({
+    // Card endpoints
     getCards: builder.query({
       query: (projectId) => `cards/project/${projectId}`,
       providesTags: ["Card"],
@@ -113,25 +100,19 @@ export const cardApi = createApi({
   }),
 });
 
-// Also create api for tags if there's time.
-
 export const {
   useGetUserQuery,
   useCreateUserMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
-} = userApi;
-export const {
   useGetProjectsQuery,
   useGetProjectQuery,
   useCreateProjectMutation,
   useDeleteProjectMutation,
   useUpdateProjectMutation,
-} = projectApi;
-export const {
   useGetCardsQuery,
   useGetCardQuery,
   useCreateCardMutation,
   useDeleteCardMutation,
   useUpdateCardMutation,
-} = cardApi;
+} = api;

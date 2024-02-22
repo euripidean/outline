@@ -46,7 +46,11 @@ function CardsMenu(props) {
         </div>
       </SortableContext>
 
-      <Button text="New Card" onClick={() => console.log("New Card")} />
+      <Button
+        modalTarget={"new-card"}
+        text="New Card"
+        onClick={() => console.log("New Card")}
+      />
     </div>
   );
 }

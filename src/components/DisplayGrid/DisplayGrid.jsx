@@ -15,7 +15,7 @@ function DisplayGrid(props) {
   return (
     <div
       ref={setNodeRef}
-      className={`display grid min-w-full grid-gap-4 grid-cols-3 p-4 ${
+      className={`display grid min-w-full grid-gap-4 md:grid-cols-3 xlg:grid-cols-4 sm:grid-cols-2 p-4 ${
         cards.length > 0 ? "min-h-[50vh]" : "h-auto"
       }`}
     >

@@ -5,25 +5,17 @@ export const outlineSlice = createSlice({
   name: "outline",
   initialState: defaultState(),
   reducers: {
-    setOutline: (state, action) => {
-      state.outline = action.payload;
+    openModal: (state, action) => {
+      state.showModal = true;
+      state.modalId = action.payload;
     },
-    setProjects: (state, action) => {
-      state.projects = action.payload;
-    },
-    setCards: (state, action) => {
-      state.cards = action.payload;
-    },
-    setUsers: (state, action) => {
-      state.users = action.payload;
-    },
-    setLoggedInUser: (state, action) => {
-      state.loggedInUser = action.payload;
+    closeModal: (state) => {
+      state.showModal = false;
+      state.modalId = null;
     },
   },
 });
 
-export const { setOutline, setProjects, setCards, setUsers, setLoggedInUser } =
-  outlineSlice.actions;
+export const { openModal, closeModal } = outlineSlice.actions;
 
 export default outlineSlice.reducer;
