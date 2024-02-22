@@ -5,7 +5,8 @@ const Project = require("../models/Project");
 //Get all projects
 router.get("/projects", async (req, res) => {
   try {
-    const projects = await Project.find();
+    const userId = req.query.userId;
+    const projects = await Project.find({ user_id: userId });
     res.status(200).json({ success: true, data: projects });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
