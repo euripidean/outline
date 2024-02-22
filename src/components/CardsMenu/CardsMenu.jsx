@@ -11,10 +11,6 @@ import {
 
 function CardsMenu(props) {
   const { id, cards } = props;
-
-  const title = cards.title;
-  const text = cards.text;
-
   const { setNodeRef } = useDroppable({
     id,
   });
@@ -47,7 +43,7 @@ function CardsMenu(props) {
       </SortableContext>
 
       <Button
-        modalTarget={"new-card"}
+        id={"new-card"}
         text="New Card"
         onClick={() => console.log("New Card")}
       />

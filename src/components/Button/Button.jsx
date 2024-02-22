@@ -6,6 +6,8 @@ function Button(props) {
   const dispatch = useDispatch();
 
   const handleClick = () => {
+    console.log("Button clicked");
+    console.log(id);
     dispatch(openModal(id));
   };
 
