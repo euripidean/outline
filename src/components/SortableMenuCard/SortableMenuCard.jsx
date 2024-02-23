@@ -2,10 +2,10 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 export function MenuCard(props) {
-  const { id, title, text } = props;
+  const { id, title } = props;
   return (
     <div
-      className="flex flex-row items-center p-2 border border-slate-200 m-1"
+      className="bg-outline-light flex flex-row bg-outline-black items-center p-2 border border-outline-bg m-1 shadow-outline-bg shadow-sm transition-all duration-300 ease-in-out"
       id={id}
     >
       <i className="fa-solid fa-grip-vertical m-2"></i>

@@ -1,12 +1,17 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
+import SortableGridCardCloseButton from "../SortableGridCardCloseButton/SortableGridCardCloseButton";
 import { CSS } from "@dnd-kit/utilities";
 
 export function GridCard(props) {
+  const { id, title, text, isDragging } = props;
   return (
-    <div className="grid grid-rows-[auto_1fr] shadow-md h-full w-full p-2 m-2">
-      <h2 className="font-semibold border-b p-1">{props.title}</h2>
-      <p className="p-1">{props.text}</p>
+    <div className="relative min-h-60 grid grid-rows-[auto_1fr] shadow-slate-500 shadow-lg h-full w-full p-2 m-2">
+      <SortableGridCardCloseButton id={id} />
+      <h2 className="font-semibold border-outline-bg border-b b-1 p-2">
+        {title}
+      </h2>
+      <p className="p-2">{text}</p>
     </div>
   );
 }

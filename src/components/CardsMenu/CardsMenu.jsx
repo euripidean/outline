@@ -1,6 +1,4 @@
 import { SortableMenuCard } from "../SortableMenuCard/SortableMenuCard";
-import MenuControls from "../MenuControls/MenuControls";
-import Button from "../Button/Button";
 import { useDroppable } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -16,19 +14,13 @@ function CardsMenu(props) {
   });
 
   return (
-    <div
-      className="cards-menu flex flex-col w-full h-screen min-h-screen overflow-y-auto p-4 "
-      style={{ backgroundColor: "#f5f5f5" }}
-    >
-      <MenuControls />
-
+    <div className="bg-outline-gold cards-menu flex flex-col w-full h-[calc(100vh-80px)] overflow-y-auto p-4">
       <SortableContext
         id={id}
         items={cards}
         strategy={verticalListSortingStrategy}
       >
         <div ref={setNodeRef} className="flex flex-col min-h-[50vh]">
-          {/* Always render the placeholder, but make it invisible when there are cards */}
           <div className={`h-0 ${cards.length === 0 ? "h-auto" : ""}`}></div>
 
           {cards.map((card, index) => (
@@ -41,12 +33,6 @@ function CardsMenu(props) {
           ))}
         </div>
       </SortableContext>
-
-      <Button
-        id={"new-card"}
-        text="New Card"
-        onClick={() => console.log("New Card")}
-      />
     </div>
   );
 }

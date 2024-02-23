@@ -6,8 +6,6 @@ function Button(props) {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    console.log("Button clicked");
-    console.log(id);
     dispatch(openModal(id));
   };
 
@@ -16,7 +14,7 @@ function Button(props) {
       id={id}
       data-modal-toggle={id}
       type="button"
-      className="border p-2"
+      className="border-outline-bg p-2 bg-outline-bg text-outline-white hover:bg-outline-gold hover:text-outline-bg transition-all duration-300 ease-in-out"
       onClick={handleClick}
     >
       {text} <i className="fa-solid fa-circle-plus p-1"></i>

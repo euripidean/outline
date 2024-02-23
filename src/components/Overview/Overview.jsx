@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCards, setActiveId } from "../../features/outlineSlice";
 import {
   DndContext,
   DragOverlay,
@@ -10,31 +12,17 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
-import CardsMenu from "../CardsMenu/CardsMenu";
+import MenuContainer from "../MenuContainer/MenuContainer";
 import DisplayGrid from "../DisplayGrid/DisplayGrid";
 import { MenuCard } from "../SortableMenuCard/SortableMenuCard";
+import { GridCard } from "../SortableGridCard/SortableGridCard";
 
 function Overview() {
-  // Will need to replace the useState with the api call for the cards by project ID and the setCards with the api call to update the cards
-  // State managed through Redux.
-  const [cards, setCards] = useState({
-    menuCards: [
-      { id: "1", title: "Plot Card 1", text: "Plot Card 1 text" },
-      { id: "2", title: "Plot Card 2", text: "Plot Card 2 text" },
-      { id: "3", title: "Plot Card 3", text: "Plot Card 3 text" },
-      { id: "4", title: "Plot Card 4", text: "Plot Card 4 text" },
-      { id: "5", title: "Plot Card 5", text: "Plot Card 5 text" },
-    ],
-    gridCards: [
-      { id: "6", title: "Plot Card 6", text: "Plot Card 6 text" },
-      { id: "7", title: "Plot Card 7", text: "Plot Card 7 text" },
-      { id: "8", title: "Plot Card 8", text: "Plot Card 8 text" },
-      { id: "9", title: "Plot Card 9", text: "Plot Card 9 text" },
-      { id: "10", title: "Plot Card 10", text: "Plot Card 10 text" },
-    ],
-  });
+  const dispatch = useDispatch();
+  const cards = useSelector((state) => state.outline.cards);
+  const activeId = useSelector((state) => state.outline.activeId);
 
-  const [activeId, setActiveId] = useState();
+  const [overSection, setOverSection] = useState();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -52,18 +40,37 @@ function Overview() {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <CardsMenu id="menuCards" cards={cards.menuCards} />
+        <MenuContainer cards={cards.menuCards} />
         <DisplayGrid id="gridCards" cards={cards.gridCards} />
+
         <DragOverlay>
           {activeId ? (
-            <MenuCard
-              id={activeId}
-              title={
-                cards[findSection(activeId)].find(
-                  (card) => card.id === activeId
-                ).title
-              }
-            />
+            overSection === "menuCards" ? (
+              <div className="bg-gray-100">
+                <MenuCard
+                  id={activeId}
+                  title={
+                    cards[findSection(activeId)].find(
+                      (card) => card.id === activeId
+                    ).title
+                  }
+                />
+              </div>
+            ) : (
+              <GridCard
+                id={activeId}
+                title={
+                  cards[findSection(activeId)].find(
+                    (card) => card.id === activeId
+                  ).title
+                }
+                text={
+                  cards[findSection(activeId)].find(
+                    (card) => card.id === activeId
+                  ).text
+                }
+              />
+            )
           ) : null}
         </DragOverlay>
       </DndContext>
@@ -80,7 +87,7 @@ function Overview() {
     const { active } = event;
     const { id } = active;
 
-    setActiveId(id);
+    dispatch(setActiveId(id));
   }
 
   function handleDragOver(event) {
@@ -96,50 +103,45 @@ function Overview() {
       overSection = activeSection === "menuCards" ? "gridCards" : "menuCards";
     }
 
-    console.log("In handleDragOver");
-    console.log("activeSection: ", activeSection);
-    console.log("overSection: ", overSection);
+    setOverSection(overSection);
 
     if (!activeSection || !overSection || activeSection === overSection) {
       return;
     }
 
-    setCards((prev) => {
-      const activeCards = prev[activeSection];
-      const overCards = prev[overSection];
+    const activeCards = cards[activeSection];
+    const overCards = cards[overSection];
 
-      // Find the indexes of the active and over cards
-      const activeIndex = activeCards.findIndex((card) => card.id === id);
-      const overIndex = overCards.findIndex((card) => card.id === overId);
+    // Find the indexes of the active and over cards
+    const activeIndex = activeCards.findIndex((card) => card.id === id);
+    const overIndex = overCards.findIndex((card) => card.id === overId);
 
-      console.log("activeIndex: ", activeIndex);
-      console.log("overIndex: ", overIndex);
+    let newIndex;
+    if (overId in cards) {
+      newIndex = overCards.length;
+    } else {
+      newIndex = overIndex;
+    }
 
-      let newIndex;
-      if (overId in prev) {
-        newIndex = overCards.length;
-      } else {
-        newIndex = overIndex;
-      }
+    const newCards = {
+      ...cards,
+      [activeSection]: [
+        ...cards[activeSection].filter((card) => card.id !== id),
+      ],
+      [overSection]: [
+        ...cards[overSection].slice(0, newIndex),
+        cards[activeSection][activeIndex],
+        ...cards[overSection].slice(newIndex, cards[overSection].length),
+      ],
+    };
 
-      return {
-        ...prev,
-        [activeSection]: [
-          ...prev[activeSection].filter((card) => card.id !== id),
-        ],
-        [overSection]: [
-          ...prev[overSection].slice(0, newIndex),
-          cards[activeSection][activeIndex],
-          ...prev[overSection].slice(newIndex, prev[overSection].length),
-        ],
-      };
-    });
+    dispatch(setCards(newCards));
   }
 
   function handleDragEnd(event) {
     const { active, over } = event;
     const { id } = active;
-    const { id: overId } = over;
+    const overId = over ? over.id : null;
 
     const activeSection = findSection(id);
     let overSection = findSection(overId);
@@ -159,18 +161,15 @@ function Overview() {
       (card) => card.id === overId
     );
 
-    console.log("In handleDragEnd");
-    console.log("activeIndex: ", activeIndex);
-    console.log("overIndex: ", overIndex);
-
     if (activeIndex !== overIndex) {
-      setCards((cards) => ({
+      const newCards = {
         ...cards,
         [overSection]: arrayMove(cards[overSection], activeIndex, overIndex),
-      }));
+      };
+      dispatch(setCards(newCards));
     }
 
-    setActiveId(null);
+    dispatch(setActiveId(null));
   }
 }
 

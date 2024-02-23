@@ -15,9 +15,7 @@ function DisplayGrid(props) {
   return (
     <div
       ref={setNodeRef}
-      className={`display grid min-w-full grid-gap-4 md:grid-cols-3 xlg:grid-cols-4 sm:grid-cols-2 p-4 ${
-        cards.length > 0 ? "min-h-[50vh]" : "h-auto"
-      }`}
+      className={`display grid gap-x-8 gap-y-4 md:grid-cols-3 xlg:grid-cols-4 sm:grid-cols-2 p-4 w-full min-h-[calc(100vh-80px)]`}
     >
       <SortableContext
         id={id}
