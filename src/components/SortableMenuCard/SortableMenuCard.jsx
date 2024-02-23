@@ -1,12 +1,21 @@
 import { useSortable } from "@dnd-kit/sortable";
+import { useDispatch } from "react-redux";
+import { addCardToGrid } from "../../features/outlineSlice";
 import { CSS } from "@dnd-kit/utilities";
 
 export function MenuCard(props) {
   const { id, title } = props;
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(addCardToGrid(id));
+  };
+
   return (
     <div
       className="bg-outline-light flex flex-row bg-outline-black items-center p-2 border border-outline-bg m-1 shadow-outline-bg shadow-sm transition-all duration-300 ease-in-out"
       id={id}
+      onClick={handleClick}
     >
       <i className="fa-solid fa-grip-vertical m-2"></i>
       <h2>{title}</h2>

@@ -6,7 +6,7 @@ import { CSS } from "@dnd-kit/utilities";
 export function GridCard(props) {
   const { id, title, text, isDragging } = props;
   return (
-    <div className="relative min-h-60 grid grid-rows-[auto_1fr] shadow-slate-500 shadow-lg h-full w-full p-2 m-2">
+    <div className="relative grid grid-rows-[auto_1fr] h-[50vh] shadow-slate-500 shadow-md aspect-w-5 aspect-h-3 p-2 m-1">
       <SortableGridCardCloseButton id={id} />
       <h2 className="font-semibold border-outline-bg border-b b-1 p-2">
         {title}

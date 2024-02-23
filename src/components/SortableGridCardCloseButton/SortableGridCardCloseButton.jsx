@@ -1,14 +1,12 @@
 import { useDispatch } from "react-redux";
-import { removeGridCard } from "../../features/outlineSlice";
+import { removeCardFromGrid } from "../../features/outlineSlice";
 
 function SortableGridCardCloseButton(props) {
   const { id } = props;
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    console.log("button clicked");
-    console.log("removeGridCard id", id);
-    dispatch(removeGridCard(id));
+    dispatch(removeCardFromGrid(id));
   };
 
   return (

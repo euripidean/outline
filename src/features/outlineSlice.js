@@ -16,16 +16,33 @@ export const outlineSlice = createSlice({
     setCards: (state, action) => {
       state.cards = action.payload;
     },
-    removeGridCard: (state, action) => {
+    removeCardFromGrid: (state, action) => {
       // remove the card from state.cards.gridCards and add to state.cards.menuCards
       const id = action.payload;
-      const card = state.cards.gridCards.find((card) => card.id === id);
-      const newCards = {
-        ...state.cards,
-        gridCards: state.cards.gridCards.filter((card) => card.id !== id),
-        menuCards: [...state.cards.menuCards, card],
-      };
-      setCards(state, newCards);
+      // find the card with the id and if it's in gridCards, remove it and add it to menuCards
+      const gridIndex = state.cards.gridCards.findIndex(
+        (card) => card.id === id
+      );
+      if (gridIndex !== -1) {
+        const card = state.cards.gridCards[gridIndex];
+        state.cards.gridCards.splice(gridIndex, 1);
+        state.cards.menuCards.push(card);
+      } else {
+        console.log("Card not found in gridCards");
+      }
+    },
+    addCardToGrid: (state, action) => {
+      const id = action.payload;
+      const menuIndex = state.cards.menuCards.findIndex(
+        (card) => card.id === id
+      );
+      if (menuIndex !== -1) {
+        const card = state.cards.menuCards[menuIndex];
+        state.cards.menuCards.splice(menuIndex, 1);
+        state.cards.gridCards.push(card);
+      } else {
+        console.log("Card not found in menuCards");
+      }
     },
     setActiveId: (state, action) => {
       state.activeId = action.payload;
@@ -33,7 +50,13 @@ export const outlineSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal, setCards, removeGridCard, setActiveId } =
-  outlineSlice.actions;
+export const {
+  openModal,
+  closeModal,
+  setCards,
+  removeCardFromGrid,
+  addCardToGrid,
+  setActiveId,
+} = outlineSlice.actions;
 
 export default outlineSlice.reducer;
