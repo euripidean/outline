@@ -1,11 +1,14 @@
 import { useDispatch } from "react-redux";
-import { openModal } from "../../features/outlineSlice";
+import { openModal, setActiveCard } from "../../features/outlineSlice";
 
-function SortableGridCardExpandButton(props) {
+function CardExpandButton(props) {
+  // this is the card id
   const { id } = props;
   const dispatch = useDispatch();
 
   const handleExpand = () => {
+    console.log("handleExpand", id);
+    dispatch(setActiveCard(id));
     dispatch(openModal("update-card"));
   };
 
@@ -21,4 +24,4 @@ function SortableGridCardExpandButton(props) {
   );
 }
 
-export default SortableGridCardExpandButton;
+export default CardExpandButton;

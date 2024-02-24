@@ -58,6 +58,7 @@ function ProjectForm(props) {
           id="logline"
           name="logline"
           className="w-full border border-outline-bg p-2 rounded-md mb-4"
+          placeholder="A one-sentence summary of your project."
         ></input>
         <button
           type="submit"

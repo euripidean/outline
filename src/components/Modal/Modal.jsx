@@ -25,7 +25,7 @@ function Modal(props) {
 
   return (
     <div
-      className="bg-outline-white flex flex-col p-2 absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/4 h-auto w-[60vw] z-50"
+      className="bg-outline-white flex flex-col shadow-2xl p-2 absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/4 h-auto w-[60vw] z-50"
       data-modal={id}
     >
       <button

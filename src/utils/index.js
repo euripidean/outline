@@ -2,6 +2,7 @@ export const defaultState = () => {
   return {
     allProjects: [],
     activeProject: null,
+    activeCard: null,
     cards: {
       menuCards: [
         {

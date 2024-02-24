@@ -2,27 +2,19 @@ import {
   useCreateCardMutation,
   useUpdateCardMutation,
 } from "../../features/apiSlice";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../../features/outlineSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 function CardForm(props) {
-  const { project, action } = props;
-  const dispatch = useDispatch();
-
-  const [createCard, { isLoading: isCreating }] = useCreateCardMutation();
-  const [updateCard, { isLoading: isUpdating }] = useUpdateCardMutation();
+  const { action } = props;
+  // This will be replaced with the query to get the active card
+  const { menuCards, gridCards } = useSelector((state) => state.outline.cards);
+  const activeCardId = useSelector((state) => state.outline.activeCard);
+  const activeCard = menuCards.find((card) => card.id === activeCardId)
+    ? menuCards.find((card) => card.id === activeCardId)
+    : gridCards.find((card) => card.id === activeCardId);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const title = e.target.title.value;
-    const text = e.target.text.value;
-    if (action === "create") {
-      createCard({ title, text, project });
-      closeModal();
-    } else {
-      updateCard({ title, text, project });
-      closeModal();
-    }
+    // functionality here
   };
 
   return (
@@ -39,6 +31,7 @@ function CardForm(props) {
           id="title"
           name="title"
           className="w-full h-10 border border-outline-bg p-2 rounded-md mb-4"
+          value={action === "update" ? activeCard.title : ""}
         />
         <label htmlFor="text" className="text-lg font-bold">
           Text
@@ -47,6 +40,7 @@ function CardForm(props) {
           id="text"
           name="text"
           className="w-full h-40 border border-outline-bg p-2 rounded-md mb-4"
+          value={action === "update" ? activeCard.text : ""}
         ></textarea>
         <button
           type="submit"

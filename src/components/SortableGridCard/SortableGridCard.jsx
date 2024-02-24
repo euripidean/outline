@@ -1,7 +1,7 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import SortableGridCardCloseButton from "../SortableGridCardCloseButton/SortableGridCardCloseButton";
-import SortableGridCardExpandButton from "../SortableGridCardExpandButton/SortableGridCardExpandButton";
+import CardExpandButton from "../CardExpandButton/CardExpandButton";
 import { CSS } from "@dnd-kit/utilities";
 
 export function GridCard(props) {
@@ -13,7 +13,7 @@ export function GridCard(props) {
         {title}
       </h2>
       <p className="p-2">{text}</p>
-      <SortableGridCardExpandButton id={id} />
+      <CardExpandButton id={id} />
     </div>
   );
 }

@@ -13,7 +13,7 @@ export function MenuCard(props) {
 
   return (
     <div
-      className="bg-outline-light w-full flex flex-row bg-outline-black items-center p-2 border border-outline-bg m-1 shadow-outline-bg shadow-sm"
+      className="relative bg-outline-light w-full flex flex-row bg-outline-black items-center p-2 border border-outline-bg m-1 shadow-outline-bg shadow-sm"
       id={id}
       onClick={handleClick}
     >

@@ -17,6 +17,9 @@ export const outlineSlice = createSlice({
     setCards: (state, action) => {
       state.cards = action.payload;
     },
+    setActiveCard: (state, action) => {
+      state.activeCard = action.payload;
+    },
     removeCardFromGrid: (state, action) => {
       // remove the card from state.cards.gridCards and add to state.cards.menuCards
       const id = action.payload;
@@ -55,6 +58,7 @@ export const {
   openModal,
   closeModal,
   setCards,
+  setActiveCard,
   removeCardFromGrid,
   addCardToGrid,
   setActiveId,
