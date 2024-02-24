@@ -3,6 +3,24 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../models/Project");
 
+// Get All Projects
+router.get("/projects", async (req, res) => {
+  const uri = process.env.MONGODB_URI;
+
+  const client = new MongoClient(uri);
+  try {
+    await client.connect();
+    const database = client.db("outline");
+    const projects = database.collection("Project");
+    const data = await projects.find({}).toArray();
+    res.status(200).json({ success: true, data: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  } finally {
+    await client.close();
+  }
+});
+
 // Create Project
 router.post("/projects", async (req, res) => {
   const uri = process.env.MONGODB_URI;

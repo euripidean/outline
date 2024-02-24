@@ -13,17 +13,33 @@ function ProjectForm(props) {
   const [createProject, { isLoading: isCreating }] = useCreateProjectMutation();
   const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const title = e.target.title.value;
+    const name = e.target.title.value;
+    const projectType = e.target.projectType.value;
     const synopsis = e.target.synopsis.value;
     const logline = e.target.logline.value;
     if (action === "create") {
-      createProject({ title, synopsis, logline, user_id: userId });
-      dispatch(closeModal());
+      try {
+        await createProject({
+          name,
+          projectType,
+          synopsis,
+          logline,
+          user_id: userId,
+        }).unwrap();
+        console.log("Project created successfully");
+        dispatch(closeModal());
+      } catch (error) {
+        console.error("Failed to create project:", error);
+      }
     } else {
-      updateProject({ title, synopsis, logline });
-      dispatch(closeModal());
+      try {
+        await updateProject({ name, projectType, synopsis, logline }).unwrap();
+        dispatch(closeModal());
+      } catch (error) {
+        console.error("Failed to update project:", error);
+      }
     }
   };
 
@@ -38,16 +54,29 @@ function ProjectForm(props) {
         </label>
         <input
           type="text"
-          id="title"
-          name="title"
+          id="name"
+          name="name"
           className="w-full border border-outline-bg p-2 rounded-md mb-4"
         />
+        <label htmlFor="projectType" className="text-lg font-bold">
+          Project Type
+        </label>
+        <select
+          id="projectType"
+          name="projectType"
+          className="w-full border border-outline-bg p-2 rounded-md mb-4"
+        >
+          <option value="novel">Novel</option>
+          <option value="screenplay">Screenplay</option>
+          <option value="short-story">Short Story</option>
+          <option value="other">Other</option>
+        </select>
         <label htmlFor="text" className="text-lg font-bold">
           Synopsis
         </label>
         <textarea
           id="synopsis"
-          name="text"
+          name="synopsis"
           className="w-full h-40 border border-outline-bg p-2 rounded-md mb-4"
         ></textarea>
         <label htmlFor="text" className="text-lg font-bold">
