@@ -4,7 +4,11 @@ export const defaultState = () => {
     activeProject: null,
     cards: {
       menuCards: [
-        { id: "1", title: "Plot Card 1", text: "Plot Card 1 text" },
+        {
+          id: "1",
+          title: "The planet blows up",
+          text: "Here's an example of an exciting plot point.",
+        },
         { id: "2", title: "Plot Card 2", text: "Plot Card 2 text" },
         { id: "3", title: "Plot Card 3", text: "Plot Card 3 text" },
         { id: "4", title: "Plot Card 4", text: "Plot Card 4 text" },
@@ -19,9 +23,7 @@ export const defaultState = () => {
       ],
     },
     activeId: null,
-    tags: [],
-    userLoggedIn: false,
-    userId: null,
+    userId: "65d92ad6a415a1285b572e38", // For development purposes, passing this in as the default.
     showModal: false,
     hideMenu: false,
     modalId: null,

@@ -8,6 +8,7 @@ export const outlineSlice = createSlice({
     openModal: (state, action) => {
       state.showModal = true;
       state.modalId = action.payload;
+      state.modalAction = action.payload;
     },
     closeModal: (state) => {
       state.showModal = false;

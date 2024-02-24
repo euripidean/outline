@@ -7,10 +7,19 @@ import "./index.css";
 function App() {
   const showModal = useSelector((state) => state.outline.showModal);
   const modalId = useSelector((state) => state.outline.modalId);
+  const userId = useSelector((state) => state.outline.userId);
+
+  const signedIn = userId ? true : false;
+
   return (
     <div className="static">
-      <NavBar userSignedIn={false} />
-      {showModal && <Modal id={modalId}></Modal>}
+      <NavBar userSignedIn={signedIn} />
+      {showModal && (
+        <>
+          <div className="fixed inset-0 bg-black transition-opacity opacity-50 z-10" />
+          <Modal id={modalId}></Modal>
+        </>
+      )}
       <Overview />
     </div>
   );

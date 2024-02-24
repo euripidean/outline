@@ -9,22 +9,6 @@ const CardSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  plotLine: {
-    type: String,
-    required: false,
-  },
-  act: {
-    type: Number,
-    required: false,
-  },
-  chapter: {
-    type: Number,
-    required: false,
-  },
-  scene: {
-    type: Number,
-    required: false,
-  },
   dateCreated: {
     type: Date,
     required: true,
@@ -33,7 +17,8 @@ const CardSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  project_id: {
+  project: {
+    // set as id of project
     type: String,
     required: true,
   },

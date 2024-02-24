@@ -34,17 +34,21 @@ export const api = createApi({
       invalidatesTags: ["User"],
     }),
     // Project endpoints
+    getProjectsByUser: builder.query({
+      query: (userId) => `projects/user/${userId}`,
+      providesTags: ["Project"],
+    }),
     getProjects: builder.query({
       query: (userId) => `projects/user/${userId}`,
       providesTags: ["Project"],
     }),
     getProject: builder.query({
-      query: (id) => `project/${id}`,
+      query: (id) => `projects/${id}`,
       providesTags: ["Project"],
     }),
     createProject: builder.mutation({
       query: (body) => ({
-        url: `project`,
+        url: `projects`,
         method: "POST",
         body,
       }),
@@ -52,14 +56,14 @@ export const api = createApi({
     }),
     deleteProject: builder.mutation({
       query: (id) => ({
-        url: `project/${id}`,
+        url: `projects/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Project"],
     }),
     updateProject: builder.mutation({
       query: (body) => ({
-        url: `project`,
+        url: `projects/${body.id}`,
         method: "PUT",
         body,
       }),
@@ -76,7 +80,7 @@ export const api = createApi({
     }),
     createCard: builder.mutation({
       query: (body) => ({
-        url: `card`,
+        url: `cards`,
         method: "POST",
         body,
       }),
