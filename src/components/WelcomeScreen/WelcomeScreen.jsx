@@ -23,7 +23,7 @@ function WelcomeScreen() {
         <div className="flex justify-center items-center mt-4">
           <button
             onClick={handleFakeSignIn}
-            className="border border-outline-gold text-outline-white p-4 w-[75%] text-xl hover:bg-outline-white hover:text-outline-bg hover:border-outline-bg"
+            className="border border-outline-gold text-outline-white p-4 w-[75%] text-xl hover:bg-outline-gold hover:text-outline-bg hover:border-outline-bg"
           >
             Get Plotting
           </button>

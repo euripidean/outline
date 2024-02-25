@@ -1,63 +1,47 @@
-const { MongoClient } = require("mongodb");
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 
 // Get All Users
-router.get("/users", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
+router.get("/", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("outline");
-    const users = database.collection("User");
-    const data = await users.find({}).toArray();
+    const data = await User.find({});
     res.status(200).json({ success: true, data: data });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
+  }
+});
+
+// Get User by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const data = await User.findById(req.params.id);
+    res.status(200).json({ success: true, data: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
 // Create User
-router.post("/users", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
+router.post("/", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("outline");
-    const users = database.collection("User");
     const user = new User(req.body);
-    const data = await users.insertOne(user);
+    const data = await user.save();
     res.status(201).json({ success: true, data: data });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
   }
 });
 
 // Update User
-router.put("/users/:id", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
+router.put("/:id", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("outline");
-    const users = database.collection("User");
-    const data = await users.updateOne(
-      { _id: req.params.id },
-      { $set: req.body }
-    );
+    const data = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.status(200).json({ success: true, data: data });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
   }
 });
 

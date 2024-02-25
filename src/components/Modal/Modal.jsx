@@ -18,6 +18,8 @@ function Modal(props) {
         return <CardForm id={id} action={"update"} />;
       case "new-project":
         return <ProjectForm action={"create"} />;
+      case "update-project":
+        return <ProjectForm action={"update"} />;
       default:
         return <div>Some rando modal</div>;
     }

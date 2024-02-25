@@ -115,6 +115,7 @@ export const {
   useUpdateUserMutation,
   useGetProjectsQuery,
   useGetProjectQuery,
+  useLazyGetProjectQuery,
   useGetProjectsByUserQuery,
   useLazyGetLastUpdatedProjectQuery,
   useCreateProjectMutation,

@@ -1,144 +1,74 @@
-const { MongoClient } = require("mongodb");
 const express = require("express");
 const router = express.Router();
 const Project = require("../models/Project");
 
 // Get All Projects
-router.get("/projects", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
+router.get("/", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("outline");
-    const projects = database.collection("Project");
-    const data = await projects.find({}).toArray();
+    const data = await Project.find({});
     res.status(200).json({ success: true, data: data });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
-  }
-});
-
-// Get Last Updated Project
-router.get("/projects/lastUpdated/:userId", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
-  try {
-    await client.connect();
-    const database = client.db("outline");
-    const projects = database.collection("Project");
-    const data = await projects
-      .find({ userId: req.params.userId })
-      .sort({ lastUpdated: -1 })
-      .limit(1)
-      .toArray();
-    res.status(200).json({ success: true, data: data });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
-  }
-});
-
-// Create Project
-router.post("/projects", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
-  try {
-    await client.connect();
-    const database = client.db("outline");
-    const projects = database.collection("Project");
-    // add the current date as the startDate and lastUpdated
-    req.body.startDate = new Date();
-    req.body.lastUpdated = new Date();
-    const project = new Project(req.body);
-    const data = await projects.insertOne(project);
-    res.status(201).json({ success: true, data: data });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
-  }
-});
-
-// Update Project
-router.put("/projects/:id", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
-  try {
-    await client.connect();
-    const database = client.db("outline");
-    const projects = database.collection("Project");
-    // add the current date as the lastUpdated
-    req.body.lastUpdated = new Date();
-    const data = await projects.updateOne(
-      { _id: req.params.id },
-      { $set: req.body }
-    );
-    res.status(200).json({ success: true, data: data });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
-  }
-});
-
-// Get Projects by User ID
-router.get("/projects/:userId", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
-  try {
-    await client.connect();
-    const database = client.db("outline");
-    const projects = database.collection("Project");
-    const data = await projects.find({ userId: req.params.userId }).toArray();
-    res.status(200).json({ success: true, data: data });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
   }
 });
 
 // Get Project by ID
-router.get("/projects/:id", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
+router.get("/:id", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("outline");
-    const projects = database.collection("Project");
-    const data = await projects.findOne({ _id: req.params.id });
-    res.status(200).json({ success: true, data: data });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
+    const data = await Project.findById(req.params.id);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
-// Delete Project
-router.delete("/projects/:id", async (req, res) => {
-  const uri = process.env.MONGODB_URI;
-
-  const client = new MongoClient(uri);
+// Get Last Updated Project
+router.get("/lastUpdated/:userId", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("outline");
-    const projects = database.collection("Project");
-    const data = await projects.deleteOne({ _id: req.params.id });
+    const data = await Project.find({ userId: req.params.userId })
+      .sort({ lastUpdated: -1 })
+      .limit(1);
     res.status(200).json({ success: true, data: data });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
-  } finally {
-    await client.close();
+  }
+});
+
+// Create Project
+router.post("/", async (req, res) => {
+  try {
+    // add the current date as the startDate and lastUpdated
+    req.body.startDate = new Date();
+    req.body.lastUpdated = new Date();
+    const project = new Project(req.body);
+    const data = await project.save();
+    res.status(201).json({ success: true, data: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Update Project
+router.put("/:id", async (req, res) => {
+  try {
+    // add the current date as the lastUpdated
+    req.body.lastUpdated = new Date();
+    const data = await Project.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).json({ success: true, data: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Get Projects by User ID
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const data = await Project.find({ userId: req.params.userId });
+    res.status(200).json({ success: true, data: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
