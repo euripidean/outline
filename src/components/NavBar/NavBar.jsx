@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { openModal } from "../../features/outlineSlice";
+import { openModal, signIn } from "../../features/outlineSlice";
 
 function NavBar(props) {
   const { userSignedIn } = props;
@@ -10,7 +10,8 @@ function NavBar(props) {
   };
 
   const handleSignInClick = () => {
-    dispatch(openModal("sign-in"));
+    // for demo purposes, we're just going to toggle the sign in state
+    dispatch(signIn(false));
   };
 
   return (

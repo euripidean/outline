@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { closeModal } from "../../features/outlineSlice";
+import { closeModal, setActiveProject } from "../../features/outlineSlice";
 import {
   useCreateProjectMutation,
   useUpdateProjectMutation,
+  useLazyGetLastUpdatedProjectQuery,
 } from "../../features/apiSlice";
 
 function ProjectForm(props) {
@@ -12,6 +13,7 @@ function ProjectForm(props) {
 
   const [createProject, { isLoading: isCreating }] = useCreateProjectMutation();
   const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
+  const [newProject, { isLoading }] = useLazyGetLastUpdatedProjectQuery();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +31,9 @@ function ProjectForm(props) {
           user_id: userId,
         }).unwrap();
         console.log("Project created successfully");
+        // get the id of the project that has just been created and set it as the activeProject
+        const newProjectId = newProject._id;
+        dispatch(setActiveProject(newProjectId));
         dispatch(closeModal());
       } catch (error) {
         console.error("Failed to create project:", error);

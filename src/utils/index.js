@@ -28,5 +28,6 @@ export const defaultState = () => {
     showModal: false,
     hideMenu: false,
     modalId: null,
+    signedIn: false,
   };
 };

@@ -21,6 +21,28 @@ router.get("/projects", async (req, res) => {
   }
 });
 
+// Get Last Updated Project
+router.get("/projects/lastUpdated/:userId", async (req, res) => {
+  const uri = process.env.MONGODB_URI;
+
+  const client = new MongoClient(uri);
+  try {
+    await client.connect();
+    const database = client.db("outline");
+    const projects = database.collection("Project");
+    const data = await projects
+      .find({ userId: req.params.userId })
+      .sort({ lastUpdated: -1 })
+      .limit(1)
+      .toArray();
+    res.status(200).json({ success: true, data: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  } finally {
+    await client.close();
+  }
+});
+
 // Create Project
 router.post("/projects", async (req, res) => {
   const uri = process.env.MONGODB_URI;

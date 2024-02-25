@@ -46,6 +46,10 @@ export const api = createApi({
       query: (id) => `projects/${id}`,
       providesTags: ["Project"],
     }),
+    getLastUpdatedProject: builder.query({
+      query: (userId) => `projects/lastUpdated/${userId}`,
+      providesTags: ["Project"],
+    }),
     createProject: builder.mutation({
       query: (body) => ({
         url: `projects`,
@@ -111,6 +115,8 @@ export const {
   useUpdateUserMutation,
   useGetProjectsQuery,
   useGetProjectQuery,
+  useGetProjectsByUserQuery,
+  useLazyGetLastUpdatedProjectQuery,
   useCreateProjectMutation,
   useDeleteProjectMutation,
   useUpdateProjectMutation,

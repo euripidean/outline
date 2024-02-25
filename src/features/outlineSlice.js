@@ -8,7 +8,6 @@ export const outlineSlice = createSlice({
     openModal: (state, action) => {
       state.showModal = true;
       state.modalId = action.payload;
-      state.modalAction = action.payload;
     },
     closeModal: (state) => {
       state.showModal = false;
@@ -51,6 +50,12 @@ export const outlineSlice = createSlice({
     setActiveId: (state, action) => {
       state.activeId = action.payload;
     },
+    setActiveProject: (state, action) => {
+      state.activeProject = action.payload;
+    },
+    signIn: (state, action) => {
+      state.signedIn = action.payload;
+    },
   },
 });
 
@@ -62,6 +67,8 @@ export const {
   removeCardFromGrid,
   addCardToGrid,
   setActiveId,
+  setActiveProject,
+  signIn,
 } = outlineSlice.actions;
 
 export default outlineSlice.reducer;
