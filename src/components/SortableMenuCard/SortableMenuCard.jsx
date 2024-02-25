@@ -18,7 +18,7 @@ export function MenuCard(props) {
       onClick={handleClick}
     >
       <i className="fa-solid fa-grip-vertical m-2"></i>
-      <h2>{title}</h2>
+      <h2 className="truncate">{title}</h2>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { SortableMenuCard } from "../SortableMenuCard/SortableMenuCard";
+import CardsMenuEmptyState from "../CardsMenuEmptyState/CardsMenuEmptyState";
 import { useDroppable } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -15,24 +16,27 @@ function CardsMenu(props) {
 
   return (
     <div className="bg-outline-gold cards-menu flex flex-col w-full h-[calc(100vh-80px)] overflow-y-auto p-4">
-      <SortableContext
-        id={id}
-        items={cards}
-        strategy={verticalListSortingStrategy}
-      >
-        <div ref={setNodeRef} className="flex flex-col min-h-[50vh]">
+      <div ref={setNodeRef} className="flex flex-col min-h-[50vh]">
+        <SortableContext
+          id={id}
+          items={cards}
+          strategy={verticalListSortingStrategy}
+        >
           <div className={`h-0 ${cards.length === 0 ? "h-auto" : ""}`}></div>
-
-          {cards.map((card, index) => (
-            <SortableMenuCard
-              key={index}
-              id={card.id}
-              title={card.title}
-              text={card.text}
-            />
-          ))}
-        </div>
-      </SortableContext>
+          {cards.length === 0 ? (
+            <CardsMenuEmptyState />
+          ) : (
+            cards.map((card, index) => (
+              <SortableMenuCard
+                key={index}
+                id={card.id}
+                title={card.title}
+                text={card.text}
+              />
+            ))
+          )}
+        </SortableContext>
+      </div>
     </div>
   );
 }
