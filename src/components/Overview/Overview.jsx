@@ -18,12 +18,15 @@ import DisplayGrid from "../DisplayGrid/DisplayGrid";
 import { MenuCard } from "../SortableMenuCard/SortableMenuCard";
 import { GridCard } from "../SortableGridCard/SortableGridCard";
 
-function Overview() {
+function Overview(props) {
+  const project = useSelector((state) => state.outline.activeProject);
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.outline.cards);
   const activeId = useSelector((state) => state.outline.activeId);
 
   const [overSection, setOverSection] = useState();
+
+  console.log("Project inside of Overview: ", project);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

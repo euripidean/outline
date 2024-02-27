@@ -28,7 +28,7 @@ router.get("/lastUpdated/:userId", async (req, res) => {
     const data = await Project.find({ userId: req.params.userId })
       .sort({ lastUpdated: -1 })
       .limit(1);
-    res.status(200).json({ success: true, data: data });
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -66,9 +66,9 @@ router.put("/:id", async (req, res) => {
 router.get("/user/:userId", async (req, res) => {
   try {
     const data = await Project.find({ userId: req.params.userId });
-    res.status(200).json({ success: true, data: data });
+    res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 

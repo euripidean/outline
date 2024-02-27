@@ -6,38 +6,8 @@ export const api = createApi({
   tagTypes: ["User", "Project", "Card"],
   endpoints: (builder) => ({
     // User endpoints
-    getUser: builder.query({
-      query: (id) => `user/${id}`,
-      providesTags: ["User"],
-    }),
-    createUser: builder.mutation({
-      query: (body) => ({
-        url: `user`,
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    deleteUser: builder.mutation({
-      query: (id) => ({
-        url: `user/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["User"],
-    }),
-    updateUser: builder.mutation({
-      query: (body) => ({
-        url: `user`,
-        method: "PUT",
-        body,
-      }),
-      invalidatesTags: ["User"],
-    }),
+    // Don't need these for demo.
     // Project endpoints
-    getProjectsByUser: builder.query({
-      query: (userId) => `projects/user/${userId}`,
-      providesTags: ["Project"],
-    }),
     getProjects: builder.query({
       query: (userId) => `projects/user/${userId}`,
       providesTags: ["Project"],
@@ -66,8 +36,8 @@ export const api = createApi({
       invalidatesTags: ["Project"],
     }),
     updateProject: builder.mutation({
-      query: (body) => ({
-        url: `projects/${body.id}`,
+      query: (id, body) => ({
+        url: `projects/${id}`,
         method: "PUT",
         body,
       }),
@@ -98,8 +68,8 @@ export const api = createApi({
       invalidatesTags: ["Card"],
     }),
     updateCard: builder.mutation({
-      query: (body) => ({
-        url: `card`,
+      query: (id, body) => ({
+        url: `card/${id}`,
         method: "PUT",
         body,
       }),
@@ -115,8 +85,9 @@ export const {
   useUpdateUserMutation,
   useGetProjectsQuery,
   useGetProjectQuery,
+  useLazyGetProjectsQuery,
   useLazyGetProjectQuery,
-  useGetProjectsByUserQuery,
+  useGetLastUpdatedProjectQuery,
   useLazyGetLastUpdatedProjectQuery,
   useCreateProjectMutation,
   useDeleteProjectMutation,

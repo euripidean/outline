@@ -6,7 +6,7 @@ const Card = require("../models/Card");
 router.get("/", async (req, res) => {
   try {
     const data = await Card.find({});
-    res.status(200).json({ success: true, data: data });
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
 router.get("/project/:projectId", async (req, res) => {
   try {
     const data = await Card.find({ projectId: req.params.projectId });
-    res.status(200).json({ success: true, data: data });
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
     card.dateCreated = new Date();
     card.lastUpdated = new Date();
     const data = await card.save();
-    res.status(201).json({ success: true, data: data });
+    res.status(201).json(data);
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -49,8 +49,12 @@ router.post("/", async (req, res) => {
 // Update Card
 router.put("/:id", async (req, res) => {
   try {
-    const data = await Card.findByIdAndUpdate(req.params.id);
-    res.status(200).json({ success: true, data: data });
+    // add the current date as the lastUpdated
+    req.body.lastUpdated = new Date();
+    const data = await Card.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -59,10 +63,8 @@ router.put("/:id", async (req, res) => {
 // Delete Card
 router.delete("/:id", async (req, res) => {
   try {
-    const data = await Card.findByIdAndDelete(req.params.id, req.body, {
-      new: true,
-    });
-    res.status(200).json({ success: true, data: data });
+    const data = await Card.findByIdAndDelete(req.params.id);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }

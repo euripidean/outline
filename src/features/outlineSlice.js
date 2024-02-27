@@ -56,6 +56,13 @@ export const outlineSlice = createSlice({
     signIn: (state, action) => {
       state.signedIn = action.payload;
     },
+    setProjects: (state, action) => {
+      state.allProjects = action.payload;
+    },
+    showToast: (state, action) => {
+      state.showToast = true;
+      state.toastMessage = action.payload;
+    },
   },
 });
 
@@ -69,6 +76,7 @@ export const {
   setActiveId,
   setActiveProject,
   signIn,
+  setProjects,
 } = outlineSlice.actions;
 
 export default outlineSlice.reducer;

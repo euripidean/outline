@@ -1,7 +1,7 @@
 export const defaultState = () => {
   return {
     allProjects: [],
-    activeProject: "65da6e0b617f8bc6a7d40a40",
+    activeProject: null,
     activeCard: null,
     cards: {
       menuCards: [
@@ -24,7 +24,7 @@ export const defaultState = () => {
       ],
     },
     activeId: null,
-    userId: "65d92ad6a415a1285b572e38", // For development purposes, passing this in as the default.
+    userId: "65dbb628dbcfcf2b2f4e9095", // For development purposes, passing this in as the default.
     showModal: false,
     hideMenu: false,
     modalId: null,
