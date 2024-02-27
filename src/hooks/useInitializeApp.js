@@ -42,7 +42,13 @@ export default function useInitializeApp(userId) {
     }
 
     if (validLastUpdatedData) {
-      dispatch(setActiveProject(validLastUpdatedData[0]._id));
+      // set active project to be the id and name of the most recently updated project
+      dispatch(
+        setActiveProject({
+          id: validLastUpdatedData[0]._id,
+          name: validLastUpdatedData[0].name,
+        })
+      );
     }
   }, [validProjectsData, validLastUpdatedData, dispatch]);
 

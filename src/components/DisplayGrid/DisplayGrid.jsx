@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useDroppable } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -8,6 +9,7 @@ import DisplayGridEmptyState from "../DisplayGridEmptyState/DisplayGridEmptyStat
 
 function DisplayGrid(props) {
   const { id, cards } = props;
+  const projectName = useSelector((state) => state.outline.activeProject.name);
 
   const { setNodeRef } = useDroppable({
     id,
