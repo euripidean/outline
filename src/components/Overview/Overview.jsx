@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCards, setActiveId } from "../../features/outlineSlice";
+import { useGetCardsQuery } from "../../features/apiSlice";
 import {
   DndContext,
   DragOverlay,
@@ -23,10 +24,21 @@ function Overview(props) {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.outline.cards);
   const activeId = useSelector((state) => state.outline.activeId);
+  console.log("project id:", project.id);
+  const {
+    data: allProjectCards,
+    error,
+    isLoading,
+  } = useGetCardsQuery(project.id);
 
   const [overSection, setOverSection] = useState();
 
-  console.log("Project inside of Overview: ", project);
+  // when the active project changes, use the getCards query to get the cards for the project
+  useEffect(() => {
+    if (allProjectCards) {
+      console.log("allProjectCards: ", allProjectCards);
+    }
+  }, [allProjectCards]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

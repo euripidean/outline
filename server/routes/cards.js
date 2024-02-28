@@ -25,7 +25,7 @@ router.get("/:id", async (req, res) => {
 // Get Cards by Project ID
 router.get("/project/:projectId", async (req, res) => {
   try {
-    const data = await Card.find({ projectId: req.params.projectId });
+    const data = await Card.find({ project: req.params.projectId });
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
