@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { SortableMenuCard } from "../SortableMenuCard/SortableMenuCard";
 import CardsMenuEmptyState from "../CardsMenuEmptyState/CardsMenuEmptyState";
 import { useDroppable } from "@dnd-kit/core";
@@ -6,10 +7,9 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-// The card array will ultimately come from a query call to the database to get all cards associated with the project whose location is the menu.
-
 function CardsMenu(props) {
-  const { id, cards } = props;
+  const cards = useSelector((state) => state.outline.cards.menuCards);
+  const { id } = props;
   const { setNodeRef } = useDroppable({
     id,
   });
@@ -29,7 +29,7 @@ function CardsMenu(props) {
             cards.map((card, index) => (
               <SortableMenuCard
                 key={index}
-                id={card.id}
+                id={card._id}
                 title={card.title}
                 text={card.text}
               />

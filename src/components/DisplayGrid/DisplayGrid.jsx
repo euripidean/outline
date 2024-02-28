@@ -8,8 +8,8 @@ import { SortableGridCard } from "../SortableGridCard/SortableGridCard";
 import DisplayGridEmptyState from "../DisplayGridEmptyState/DisplayGridEmptyState";
 
 function DisplayGrid(props) {
-  const { id, cards } = props;
-  const projectName = useSelector((state) => state.outline.activeProject.name);
+  const cards = useSelector((state) => state.outline.cards.gridCards);
+  const { id } = props;
 
   const { setNodeRef } = useDroppable({
     id,
@@ -33,7 +33,7 @@ function DisplayGrid(props) {
           cards.map((card, index) => (
             <SortableGridCard
               key={index}
-              id={card.id}
+              id={card._id}
               title={card.title}
               text={card.text}
             />

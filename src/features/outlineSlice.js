@@ -24,7 +24,7 @@ export const outlineSlice = createSlice({
       const id = action.payload;
       // find the card with the id and if it's in gridCards, remove it and add it to menuCards
       const gridIndex = state.cards.gridCards.findIndex(
-        (card) => card.id === id
+        (card) => card._id === id
       );
       if (gridIndex !== -1) {
         const card = state.cards.gridCards[gridIndex];
@@ -37,7 +37,7 @@ export const outlineSlice = createSlice({
     addCardToGrid: (state, action) => {
       const id = action.payload;
       const menuIndex = state.cards.menuCards.findIndex(
-        (card) => card.id === id
+        (card) => card._id === id
       );
       if (menuIndex !== -1) {
         const card = state.cards.menuCards[menuIndex];

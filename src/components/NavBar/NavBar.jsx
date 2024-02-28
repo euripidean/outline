@@ -28,7 +28,9 @@ function NavBar(props) {
           alt="Outline Logo"
         />
         {currentProject && (
-          <h2 className="text-outline-light">{currentProject.name}</h2>
+          <h2 className="text-outline-white uppercase">
+            {currentProject.name}
+          </h2>
         )}
         <button
           data-collapse-toggle="navbar-dropdown"

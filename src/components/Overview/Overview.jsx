@@ -19,26 +19,35 @@ import DisplayGrid from "../DisplayGrid/DisplayGrid";
 import { MenuCard } from "../SortableMenuCard/SortableMenuCard";
 import { GridCard } from "../SortableGridCard/SortableGridCard";
 
-function Overview(props) {
+function Overview() {
   const project = useSelector((state) => state.outline.activeProject);
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.outline.cards);
   const activeId = useSelector((state) => state.outline.activeId);
-  console.log("project id:", project.id);
+
   const {
     data: allProjectCards,
     error,
     isLoading,
   } = useGetCardsQuery(project.id);
 
-  const [overSection, setOverSection] = useState();
-
-  // when the active project changes, use the getCards query to get the cards for the project
   useEffect(() => {
     if (allProjectCards) {
-      console.log("allProjectCards: ", allProjectCards);
+      const menuCards = allProjectCards.filter(
+        (card) => card.cardType === "menu"
+      );
+      const gridCards = allProjectCards.filter(
+        (card) => card.cardType === "grid"
+      );
+      const newCards = {
+        menuCards: menuCards,
+        gridCards: gridCards,
+      };
+      dispatch(setCards(newCards));
     }
-  }, [allProjectCards]);
+  }, [allProjectCards, dispatch]);
+
+  const [overSection, setOverSection] = useState();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -66,37 +75,33 @@ function Overview(props) {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <MenuContainer cards={cards.menuCards} />
-        <DisplayGrid id="gridCards" cards={cards.gridCards} />
-
-        <DragOverlay>
+        <MenuContainer id="menuCards" />
+        <DisplayGrid id="gridCards" />
+        <DragOverlay
+          dropAnimation={{
+            duration: 200,
+            easing: "ease",
+          }}
+          style={{
+            backgroundColor: "#c1ac79",
+            opacity: 0.9,
+            zIndex: 1000,
+          }}
+        >
           {activeId ? (
-            overSection === "menuCards" ? (
-              <div className="bg-gray-100">
-                <MenuCard
-                  id={activeId}
-                  title={
-                    cards[findSection(activeId)].find(
-                      (card) => card.id === activeId
-                    ).title
-                  }
-                />
-              </div>
-            ) : (
-              <GridCard
-                id={activeId}
-                title={
-                  cards[findSection(activeId)].find(
-                    (card) => card.id === activeId
-                  ).title
-                }
-                text={
-                  cards[findSection(activeId)].find(
-                    (card) => card.id === activeId
-                  ).text
-                }
-              />
-            )
+            <GridCard
+              id={activeId}
+              title={
+                cards[findSection(activeId)].find(
+                  (card) => card._id === activeId
+                ).title
+              }
+              text={
+                cards[findSection(activeId)].find(
+                  (card) => card._id === activeId
+                ).text
+              }
+            />
           ) : null}
         </DragOverlay>
       </DndContext>
@@ -105,7 +110,7 @@ function Overview(props) {
 
   function findSection(id) {
     return Object.keys(cards).find((key) =>
-      cards[key].some((card) => card.id === id)
+      cards[key].some((card) => card._id === id)
     );
   }
 
@@ -139,8 +144,8 @@ function Overview(props) {
     const overCards = cards[overSection];
 
     // Find the indexes of the active and over cards
-    const activeIndex = activeCards.findIndex((card) => card.id === id);
-    const overIndex = overCards.findIndex((card) => card.id === overId);
+    const activeIndex = activeCards.findIndex((card) => card._id === id);
+    const overIndex = overCards.findIndex((card) => card._id === overId);
 
     let newIndex;
     if (overId in cards) {
@@ -152,7 +157,7 @@ function Overview(props) {
     const newCards = {
       ...cards,
       [activeSection]: [
-        ...cards[activeSection].filter((card) => card.id !== id),
+        ...cards[activeSection].filter((card) => card._id !== id),
       ],
       [overSection]: [
         ...cards[overSection].slice(0, newIndex),
@@ -181,10 +186,10 @@ function Overview(props) {
     }
 
     const activeIndex = cards[activeSection].findIndex(
-      (card) => card.id === active.id
+      (card) => card._id === active.id
     );
     const overIndex = cards[overSection].findIndex(
-      (card) => card.id === overId
+      (card) => card._id === overId
     );
 
     if (activeIndex !== overIndex) {

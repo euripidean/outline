@@ -5,7 +5,8 @@ import CardExpandButton from "../CardExpandButton/CardExpandButton";
 import { CSS } from "@dnd-kit/utilities";
 
 export function GridCard(props) {
-  const { id, title, text, isDragging } = props;
+  const { id, title, text } = props;
+
   return (
     <div className="relative grid grid-rows-[auto_1fr] h-[50vh] shadow-slate-500 shadow-md aspect-w-5 aspect-h-3 p-2 m-1">
       <SortableGridCardCloseButton id={id} />
@@ -19,7 +20,7 @@ export function GridCard(props) {
 }
 
 export function SortableGridCard(props) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition, active } =
     useSortable({
       id: props.id,
     });
@@ -27,6 +28,7 @@ export function SortableGridCard(props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    visibility: active && active.id === props.id ? "hidden" : "visible",
   };
 
   return (

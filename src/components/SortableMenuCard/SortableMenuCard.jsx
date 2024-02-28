@@ -24,7 +24,7 @@ export function MenuCard(props) {
 }
 
 export function SortableMenuCard(props) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition, active } =
     useSortable({
       id: props.id,
     });
@@ -32,6 +32,7 @@ export function SortableMenuCard(props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    visibility: active && active.id === props.id ? "hidden" : "visible",
   };
 
   return (
