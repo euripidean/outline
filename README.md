@@ -10,15 +10,23 @@ _Frontend_
 - React
 - Redux
 - RTK Query
+- Dnd-Kit
 - TailwindCSS
-- DndKit
 
-  _Backend_
+_Backend_
 
 - Node.js
 - Express
 - MongoDB
 - Mongoose
+
+## Screenshots
+
+_Home Screen_
+![Screenshot 2024-02-29 at 9 29 55 AM](https://github.com/euripidean/outline/assets/33559193/3245a05a-ef26-4917-9523-a7f02afd4df1)
+
+_Project in Action_
+![Screenshot 2024-02-29 at 12 52 03 PM](https://github.com/euripidean/outline/assets/33559193/ea964c25-c8d8-45c4-9327-ea81616d7b29)
 
 ## Features
 
