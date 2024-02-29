@@ -48,6 +48,7 @@ router.post("/", async (req, res) => {
 
 // Update Card
 router.put("/:id", async (req, res) => {
+  console.log("req.body:", req.body);
   try {
     // add the current date as the lastUpdated
     req.body.lastUpdated = new Date();
