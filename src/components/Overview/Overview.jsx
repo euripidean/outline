@@ -135,7 +135,11 @@ function Overview() {
   function handleDragOver(event) {
     const { active, over } = event;
     const { id } = active;
-    const { id: overId } = over;
+    let overId;
+
+    if (over) {
+      overId = over.id;
+    }
 
     const activeSection = findSection(id);
     let overSection;
@@ -182,12 +186,17 @@ function Overview() {
     };
 
     dispatch(setCards(newCards));
+    // render a save button and then when that is clicked, update the database with where the cards are now.
   }
 
   function handleDragEnd(event) {
     const { active, over } = event;
     const { id } = active;
-    const overId = over ? over.id : null;
+    let overId;
+
+    if (over) {
+      overId = over.id;
+    }
 
     const activeSection = findSection(id);
 
