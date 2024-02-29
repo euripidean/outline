@@ -28,6 +28,7 @@ _Home Screen_
 _Project in Action_
 ![Screenshot 2024-02-29 at 12 52 03 PM](https://github.com/euripidean/outline/assets/33559193/ea964c25-c8d8-45c4-9327-ea81616d7b29)
 
+
 ## Features
 
 - Create, read, update, and delete cards and projects
@@ -44,7 +45,9 @@ _Project in Action_
 - Set narrative structure and track progress
 - I'd love to integrate this functionality into Highland 2, a writing app I use frequently.
 
-## Design
+## Known Issues
+- Drag and drop with the DragOverlay switching between the menu and grid is a little clunky.
+- Need to have a 'save dashboard' function that means the card position (grid or menu) is saved to the database when the user chooses.
 
 ## Available Scripts
 
