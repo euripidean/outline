@@ -2,13 +2,12 @@ import { useDispatch } from "react-redux";
 import { openModal, setActiveCard } from "../../features/outlineSlice";
 
 function CardExpandButton(props) {
-  // this is the card id
   const { id } = props;
   const dispatch = useDispatch();
 
   const handleExpand = () => {
-    console.log("handleExpand", id);
     dispatch(setActiveCard(id));
+    console.log("id in handle expand", id);
     dispatch(openModal("update-card"));
   };
 

@@ -49,7 +49,7 @@ export const api = createApi({
       providesTags: ["Card"],
     }),
     getCard: builder.query({
-      query: (id) => `card/${id}`,
+      query: (id) => `cards/${id}`,
       providesTags: ["Card"],
     }),
     createCard: builder.mutation({
@@ -62,14 +62,14 @@ export const api = createApi({
     }),
     deleteCard: builder.mutation({
       query: (id) => ({
-        url: `card/${id}`,
+        url: `cards/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Card"],
     }),
     updateCard: builder.mutation({
-      query: (id, body) => ({
-        url: `card/${id}`,
+      query: ({ id, body }) => ({
+        url: `cards/${id}`,
         method: "PUT",
         body,
       }),

@@ -17,6 +17,7 @@ export const outlineSlice = createSlice({
       state.cards = action.payload;
     },
     setActiveCard: (state, action) => {
+      console.log();
       state.activeCard = action.payload;
     },
     removeCardFromGrid: (state, action) => {

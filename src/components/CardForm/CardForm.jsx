@@ -1,20 +1,62 @@
+import { useState } from "react";
 import {
+  useGetCardQuery,
   useCreateCardMutation,
   useUpdateCardMutation,
 } from "../../features/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 
+import { closeModal } from "../../features/outlineSlice";
+
 function CardForm(props) {
   const { action } = props;
-  // This will be replaced with the query to get the active card
-  const { menuCards, gridCards } = useSelector((state) => state.outline.cards);
+  const dispatch = useDispatch();
   const activeCardId = useSelector((state) => state.outline.activeCard);
-  const activeCard = menuCards.find((card) => card.id === activeCardId)
-    ? menuCards.find((card) => card.id === activeCardId)
-    : gridCards.find((card) => card.id === activeCardId);
+  const currentProjectId = useSelector(
+    (state) => state.outline.activeProject.id
+  );
+  const { data: activeCard } = useGetCardQuery(activeCardId);
+  const [createCard, { data: createData, error: createError }] =
+    useCreateCardMutation();
+  const [updateCard, { data: updateData, error: updateError }] =
+    useUpdateCardMutation();
 
-  const handleSubmit = (e) => {
-    // functionality here
+  const [text, setText] = useState(
+    action === "update" ? activeCard?.text || "" : ""
+  );
+  const [title, setTitle] = useState(
+    action === "update" ? activeCard?.title || "" : ""
+  );
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (action === "create") {
+      await createCard({
+        title,
+        text,
+        project: currentProjectId,
+        cardType: "menu",
+      });
+      if (createError) {
+        console.error("Failed to create card:", createError);
+      }
+    } else if (action === "update") {
+      console.log("activeCardId:", activeCardId);
+      console.log("text:", text);
+      await updateCard({ id: activeCardId, body: { title, text } });
+      if (updateError) {
+        console.error("Failed to update card:", updateError);
+      }
+    }
+    dispatch(closeModal());
   };
 
   return (
@@ -22,7 +64,7 @@ function CardForm(props) {
       <h2 className="text-2xl font-bold">
         {action === "create" ? "Create New Card" : "Update Card"}
       </h2>
-      <form className="flex flex-col w-full h-full">
+      <form className="flex flex-col w-full h-full" onSubmit={handleSubmit}>
         <label htmlFor="title" className="text-lg font-bold">
           Title
         </label>
@@ -31,7 +73,8 @@ function CardForm(props) {
           id="title"
           name="title"
           className="w-full h-10 border border-outline-bg p-2 rounded-md mb-4"
-          value={action === "update" ? activeCard.title : ""}
+          value={title}
+          onChange={handleTitleChange}
         />
         <label htmlFor="text" className="text-lg font-bold">
           Text
@@ -40,14 +83,14 @@ function CardForm(props) {
           id="text"
           name="text"
           className="w-full h-40 border border-outline-bg p-2 rounded-md mb-4"
-          value={action === "update" ? activeCard.text : ""}
+          value={text}
+          onChange={handleTextChange}
         ></textarea>
         <button
           type="submit"
           className="bg-outline-bg text-white p-2 rounded-md"
-          onSubmit={handleSubmit}
         >
-          {action === "create" ? "Create Card" : "Update Card"}
+          {action === "create" ? "Create Card" : "Edit Card"}
         </button>
       </form>
     </div>

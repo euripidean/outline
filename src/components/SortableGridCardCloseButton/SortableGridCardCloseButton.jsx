@@ -3,7 +3,6 @@ import { removeCardFromGrid } from "../../features/outlineSlice";
 
 function SortableGridCardCloseButton(props) {
   const { id } = props;
-  console.log("SortableGridCardCloseButton -> id", id);
   const dispatch = useDispatch();
 
   const handleClick = () => {
