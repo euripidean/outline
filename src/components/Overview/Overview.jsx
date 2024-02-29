@@ -89,19 +89,35 @@ function Overview() {
           }}
         >
           {activeId ? (
-            <GridCard
-              id={activeId}
-              title={
-                cards[findSection(activeId)].find(
-                  (card) => card._id === activeId
-                ).title
-              }
-              text={
-                cards[findSection(activeId)].find(
-                  (card) => card._id === activeId
-                ).text
-              }
-            />
+            overSection === "menuCards" ? (
+              <MenuCard
+                id={activeId}
+                title={
+                  cards[findSection(activeId)].find(
+                    (card) => card._id === activeId
+                  ).title
+                }
+                text={
+                  cards[findSection(activeId)].find(
+                    (card) => card._id === activeId
+                  ).text
+                }
+              />
+            ) : (
+              <GridCard
+                id={activeId}
+                title={
+                  cards[findSection(activeId)].find(
+                    (card) => card._id === activeId
+                  ).title
+                }
+                text={
+                  cards[findSection(activeId)].find(
+                    (card) => card._id === activeId
+                  ).text
+                }
+              />
+            )
           ) : null}
         </DragOverlay>
       </DndContext>
@@ -175,19 +191,15 @@ function Overview() {
     const overId = over ? over.id : null;
 
     const activeSection = findSection(id);
-    let overSection = findSection(overId);
 
-    if (overSection === undefined) {
-      overSection = activeSection === "menuCards" ? "gridCards" : "menuCards";
-    }
-
-    if (!activeSection || !overSection || activeSection !== overSection) {
+    if (!activeSection) {
       return;
     }
 
     const activeIndex = cards[activeSection].findIndex(
-      (card) => card._id === active.id
+      (card) => card._id === id
     );
+
     const overIndex = cards[overSection].findIndex(
       (card) => card._id === overId
     );

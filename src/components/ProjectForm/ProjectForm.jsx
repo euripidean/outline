@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  closeModal,
-  setActiveProject,
-  showToast,
-} from "../../features/outlineSlice";
+import { closeModal, showToast } from "../../features/outlineSlice";
 import {
   useCreateProjectMutation,
   useUpdateProjectMutation,
@@ -23,7 +19,7 @@ function ProjectForm(props) {
   const { data: activeProject } = useGetProjectQuery(currentProjectId);
   const [createProject, { error: createError }] = useCreateProjectMutation();
   const [updateProject, { error: updateError }] = useUpdateProjectMutation();
-  const [deleteProject, { error: deleteError }] = useDeleteProjectMutation();
+  const [deleteProject] = useDeleteProjectMutation();
 
   const [name, setName] = useState("");
   const [projectType, setProjectType] = useState("novel");
@@ -52,14 +48,13 @@ function ProjectForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (action === "create") {
-      const newProject = await createProject({
+      await createProject({
         name,
         projectType,
         synopsis,
         logline,
         userId,
       }).unwrap();
-      dispatch(setActiveProject(newProject));
       dispatch(showToast("Project created successfully!"));
     }
     if (createError) {
