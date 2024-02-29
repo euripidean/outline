@@ -78,7 +78,7 @@ function CardForm(props) {
       </h2>
       <form className="flex flex-col w-full h-full" onSubmit={handleSubmit}>
         <label htmlFor="title" className="text-lg font-bold">
-          Title
+          Title: {activeCardId}
         </label>
         <input
           type="text"
