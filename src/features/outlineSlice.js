@@ -64,6 +64,9 @@ export const outlineSlice = createSlice({
       state.showToast = true;
       state.toastMessage = action.payload;
     },
+    hideToast: (state) => {
+      state.showToast = false;
+    },
   },
 });
 
@@ -78,6 +81,8 @@ export const {
   setActiveProject,
   signIn,
   setProjects,
+  showToast,
+  hideToast,
 } = outlineSlice.actions;
 
 export default outlineSlice.reducer;

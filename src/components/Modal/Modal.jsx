@@ -36,7 +36,6 @@ function Modal(props) {
       >
         <i className="text-2xl fa-regular fa-circle-xmark"></i>
       </button>
-      {/* // Button to close the modal to the top right hand corner */}
       <div className="w-full h-ful p-2 rounded-md overflow-y-auto">
         {chooseForm(id)}
       </div>

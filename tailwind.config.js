@@ -10,6 +10,9 @@ module.exports = {
         "outline-mid": "#c1ac79",
         "outline-gold": "#aa8a3e",
       },
+      animation: {
+        "slide-up": "slide-up 0.5s ease-out",
+      },
     },
   },
   plugins: [],

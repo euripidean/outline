@@ -26,7 +26,8 @@ export const defaultState = () => {
     activeId: null,
     userId: "65dbb628dbcfcf2b2f4e9095", // For development purposes, passing this in as the default.
     showModal: false,
-    hideMenu: false,
+    showToast: false,
+    toastMessage: "This is a toast message",
     modalId: null,
     signedIn: false,
   };

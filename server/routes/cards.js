@@ -64,7 +64,7 @@ router.put("/:id", async (req, res) => {
 // Delete Card
 router.delete("/:id", async (req, res) => {
   try {
-    const data = await Card.findByIdAndDelete(req.params.id);
+    const data = await Card.findOneAndDelete(req.params.id);
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });

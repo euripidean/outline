@@ -62,6 +62,16 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// Delete Project
+router.delete("/:id", async (req, res) => {
+  try {
+    const data = await Project.findOneAndDelete({ _id: req.params.id });
+    res.status(200).json({ success: true, data: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // Get Projects by User ID
 router.get("/user/:userId", async (req, res) => {
   try {

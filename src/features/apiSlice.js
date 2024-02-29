@@ -36,7 +36,7 @@ export const api = createApi({
       invalidatesTags: ["Project"],
     }),
     updateProject: builder.mutation({
-      query: (id, body) => ({
+      query: ({ id, body }) => ({
         url: `projects/${id}`,
         method: "PUT",
         body,
@@ -79,16 +79,9 @@ export const api = createApi({
 });
 
 export const {
-  useGetUserQuery,
-  useCreateUserMutation,
-  useDeleteUserMutation,
-  useUpdateUserMutation,
   useGetProjectsQuery,
   useGetProjectQuery,
-  useLazyGetProjectsQuery,
-  useLazyGetProjectQuery,
   useGetLastUpdatedProjectQuery,
-  useLazyGetLastUpdatedProjectQuery,
   useCreateProjectMutation,
   useDeleteProjectMutation,
   useUpdateProjectMutation,
