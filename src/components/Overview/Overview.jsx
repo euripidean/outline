@@ -25,11 +25,7 @@ function Overview() {
   const cards = useSelector((state) => state.outline.cards);
   const activeId = useSelector((state) => state.outline.activeId);
 
-  const {
-    data: allProjectCards,
-    error,
-    isLoading,
-  } = useGetCardsQuery(project.id);
+  const { data: allProjectCards } = useGetCardsQuery(project.id);
 
   useEffect(() => {
     if (allProjectCards) {
@@ -83,7 +79,6 @@ function Overview() {
             easing: "ease",
           }}
           style={{
-            backgroundColor: "#c1ac79",
             opacity: 0.9,
             zIndex: 1000,
           }}
@@ -142,12 +137,16 @@ function Overview() {
     const { id } = active;
     const { id: overId } = over;
 
-    // Find the appropriate sections for the active and over cards
     const activeSection = findSection(id);
-    let overSection = findSection(overId);
+    let overSection;
 
-    if (overSection === undefined) {
-      overSection = activeSection === "menuCards" ? "gridCards" : "menuCards";
+    if (overId === "menuCards" || overId === "gridCards") {
+      overSection = overId;
+    } else {
+      overSection = findSection(overId);
+      if (overSection === undefined) {
+        overSection = activeSection === "menuCards" ? "gridCards" : "menuCards";
+      }
     }
 
     setOverSection(overSection);
