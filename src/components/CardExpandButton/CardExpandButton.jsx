@@ -7,7 +7,6 @@ function CardExpandButton(props) {
 
   const handleExpand = () => {
     dispatch(setActiveCard(id));
-    console.log("id in handle expand", id);
     dispatch(openModal("update-card"));
   };
 
