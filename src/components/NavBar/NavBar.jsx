@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { openModal, signIn } from "../../features/outlineSlice";
+import logo from "../../logo.png";
 
 function NavBar(props) {
   const { userSignedIn } = props;
@@ -24,7 +25,7 @@ function NavBar(props) {
       <div className="flex flex-wrap items-center justify-between mx-auto p-4">
         <img
           className="h-8 flex items-start space-x-3 rtl:space-x-reverse"
-          src="./images/logo.png"
+          src={logo}
           alt="Outline Logo"
         />
         {currentProject && (

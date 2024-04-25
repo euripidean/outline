@@ -25,7 +25,7 @@ function Overview() {
   const cards = useSelector((state) => state.outline.cards);
   const activeId = useSelector((state) => state.outline.activeId);
 
-  const { data: allProjectCards } = useGetCardsQuery(project.id);
+  const { data: allProjectCards } = useGetCardsQuery(project?.id || "");
 
   useEffect(() => {
     if (allProjectCards) {

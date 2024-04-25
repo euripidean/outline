@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { signIn } from "../../features/outlineSlice";
+import logo from "../../logo.png";
 
 function WelcomeScreen() {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ function WelcomeScreen() {
   return (
     <div className="text-outline-white absolute top-0 left-0 w-full h-full bg-outline-bg flex flex-col items-center space">
       <div className="w-[50%] my-auto">
-        <img src="./images/logo.png" alt="logo" />
+        <img src={logo} alt="logo" />
         <div className="text-outline-light text-center text-xl font-thin p-4">
           <blockquote>
             <p className="leading-8">
