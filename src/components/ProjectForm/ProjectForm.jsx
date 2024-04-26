@@ -16,7 +16,9 @@ function ProjectForm(props) {
   );
   const userId = useSelector((state) => state.outline.userId);
 
-  const { data: activeProject } = useGetProjectQuery(currentProjectId);
+  const { data: activeProject } = useGetProjectQuery(
+    currentProjectId ? currentProjectId : undefined
+  );
   const [createProject, { error: createError }] = useCreateProjectMutation();
   const [updateProject, { error: updateError }] = useUpdateProjectMutation();
   const [deleteProject] = useDeleteProjectMutation();
